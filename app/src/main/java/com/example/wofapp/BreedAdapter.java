@@ -1,5 +1,6 @@
 package com.example.wofapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class BreedAdapter extends RecyclerView.Adapter<BreedAdapter.MyViewHolder>{
 
+    private Context context;
     private ArrayList<Breed> breeds;
     private OnItemClickListener listener;
 
@@ -44,13 +46,21 @@ public class BreedAdapter extends RecyclerView.Adapter<BreedAdapter.MyViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nameBreedTv.setText(breeds.get(position).getNameBreed());
+        holder.nameBreedTv.setText(breeds.get(position).getName());
+        holder.bind(listener);
+
+        if (position%2!=0){
+            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.colorStripped));
+        }else{
+            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
+        }
     }
 
     @Override

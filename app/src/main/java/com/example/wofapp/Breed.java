@@ -1,29 +1,18 @@
 package com.example.wofapp;
 
-import com.google.gson.JsonArray;
-
 public class Breed {
 
-    private String nameBreed;
-    private JsonArray results;
+    private String name;
 
-    public Breed(String nameBreed) {
-        this.nameBreed = nameBreed;
+    public Breed(String name) {
+        this.name = name;
     }
 
-    public String getNameBreed() {
-        return nameBreed;
+    public String getName() {
+        return name;
     }
 
-    public void setNameBreed(String nameBreed) {
-        this.nameBreed = nameBreed;
-    }
-
-    public JsonArray getResults() {
-        return results;
-    }
-
-    public void setResults(JsonArray results) {
-        this.results = results;
+    public void setName(String name) {
+        this.name = name;
     }
 }
