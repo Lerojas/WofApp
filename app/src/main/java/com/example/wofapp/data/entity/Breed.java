@@ -1,4 +1,4 @@
-package com.example.wofapp;
+package com.example.wofapp.data.entity;
 
 public class Breed {
 

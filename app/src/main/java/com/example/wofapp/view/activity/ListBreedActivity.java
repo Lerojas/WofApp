@@ -1,4 +1,4 @@
-package com.example.wofapp;
+package com.example.wofapp.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
+import com.example.wofapp.data.entity.Breed;
+import com.example.wofapp.view.adapter.BreedAdapter;
+import com.example.wofapp.data.repository.Interceptors;
+import com.example.wofapp.R;
+import com.example.wofapp.data.repository.datasource.SearchBreed;
+import com.example.wofapp.view.viewmodel.WrapperBreed;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -19,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ListBreedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         final BreedAdapter breedAdapter = new BreedAdapter(breeds, new BreedAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                Intent intent = new Intent(ListBreedActivity.this, ListImageActivity.class);
                 intent.putExtra("nameBreed",breeds.get(position).getName());
                 startActivity(intent);
             }
@@ -43,36 +48,30 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(breedAdapter);
 
-        Search search = new Interceptors().theMostBasicInterceptor();
-        search.getListBreeds().enqueue(new Callback<WrapperBreed>() {
+        SearchBreed searchBreed = new Interceptors().theMostBasicInterceptor();
+        searchBreed.getListBreeds().enqueue(new Callback<WrapperBreed>() {
             @Override
             public void onResponse(Call<WrapperBreed> call, Response<WrapperBreed> response) {
-
-                //LOG DEBUG
-                //Log.e("XXXXX","RESPUESTA: " + response.body().getMessage());
-                //Log.e("XXXXX","RESPUESTA: " + response.body().getStatus());
 
                 if(response.body().getStatus().equals("success")){
 
                     JsonArray jsonArray = response.body().getMessage();
 
                     for (JsonElement pa : jsonArray) {
-
                         String name = pa.getAsString();
-                        //Log.e("XXXXX","name: " + name);
                         breeds.add(new Breed(name));
                     }
 
                     breedAdapter.notifyDataSetChanged();
                 }
                 else{
-                    //TODO: MOSTRAR MENSAJE DE FAILED DE CONECCION A LA API.
+                    Toast.makeText(ListBreedActivity.this, "Error al obtener los datos de la api", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<WrapperBreed> call, Throwable t) {
-                //TODO: MOSTRAR MENSAJE DE FAILED DE CONECCION A LA API.
+                Toast.makeText(ListBreedActivity.this, "Error al conectarse de la api", Toast.LENGTH_SHORT).show();
             }
         });
     }

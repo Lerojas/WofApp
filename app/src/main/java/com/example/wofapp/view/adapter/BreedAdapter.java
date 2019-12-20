@@ -1,4 +1,4 @@
-package com.example.wofapp;
+package com.example.wofapp.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.wofapp.data.entity.Breed;
+import com.example.wofapp.R;
 
 import java.util.ArrayList;
 

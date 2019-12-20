@@ -1,13 +1,13 @@
-package com.example.wofapp;
+package com.example.wofapp.view.viewmodel;
 
 import com.google.gson.JsonArray;
 
-public class WrapperBreed {
+public class WrapperImage {
 
     private JsonArray message;
     private String status;
 
-    public WrapperBreed(JsonArray message, String status) {
+    public WrapperImage(JsonArray message, String status) {
         this.message = message;
         this.status = status;
     }
